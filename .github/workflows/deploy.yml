@@ -40,8 +40,8 @@ jobs:
     - name: Build application
       run: npm run build
       env:
-        VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-        VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        REACT_APP_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+        REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
@@ -94,13 +94,7 @@ jobs:
           docker rm mosque-map-app || true
           
           # Run new container
-          docker run -d \
-            --name mosque-map-app \
-            --restart unless-stopped \
-            -p 3011:80 \
-            -e VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }} \
-            -e VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }} \
-            mustafarenderrevenueai/mosque-map-app:latest
+          docker run -d             --name mosque-map-app             --restart unless-stopped             -p 3011:80             -e REACT_APP_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}             -e REACT_APP_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}             mustafarenderrevenueai/mosque-map-app:latest
           
           # Clean up old images
           docker image prune -f || true
