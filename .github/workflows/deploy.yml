@@ -43,6 +43,11 @@ jobs:
         REACT_APP_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
         REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
+    - name: Debug Supabase Secrets
+      run: |
+        echo "VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}"
+        echo "VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}"
+
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
