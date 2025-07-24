@@ -88,7 +88,7 @@ jobs:
           docker run -d \
             --name mosque-map-app \
             --restart unless-stopped \
-            -p 3000:80 \
+            -p 3011:80 \
             -e VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }} \
             -e VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }} \
             mustafarenderrevenueai/mosque-map-app:latest

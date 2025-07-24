@@ -23,7 +23,7 @@ A modern, mobile-first web application for finding and managing mosque locations
 
 ## 🌐 Live Demo
 
-**App URL**: http://5.189.174.110:3000
+**App URL**: http://5.189.174.110:3011
 
 ## 🛠️ Development
 
@@ -58,7 +58,7 @@ npm run build
 This app uses automated CI/CD with GitHub Actions:
 
 1. **Push to main** → Builds Docker image
-2. **Deploy to server** → Runs at http://5.189.174.110:3000
+2. **Deploy to server** → Runs at http://5.189.174.110:3011
 3. **Zero downtime** → Rolling updates with health checks
 
 Built with modern web technologies for the best user experience.

@@ -49,8 +49,8 @@ docker logs --tail 20 mosque-map-app 2>/dev/null || echo "Container not running"
 echo -e "\nResource Usage:"
 docker stats --no-stream mosque-map-app 2>/dev/null || echo "Container not running"
 
-echo -e "\nPort 3000 Status:"
-sudo netstat -tlnp | grep :3000 || echo "Port 3000 not in use"
+echo -e "\nPort 3011 Status:"
+sudo netstat -tlnp | grep :3011 || echo "Port 3011 not in use"
 EOF
 
 chmod +x monitor.sh
@@ -66,7 +66,7 @@ docker pull mustafarenderrevenueai/mosque-map-app:latest
 docker run -d \
     --name mosque-map-app \
     --restart unless-stopped \
-    -p 3000:80 \
+    -p 3011:80 \
     mustafarenderrevenueai/mosque-map-app:latest
 echo "✅ App restarted!"
 EOF
@@ -76,7 +76,7 @@ chmod +x restart.sh
 # Setup basic firewall rules
 echo "🔥 Setting up firewall..."
 sudo ufw allow ssh
-sudo ufw allow 3000/tcp
+sudo ufw allow 3011/tcp
 sudo ufw --force enable
 
 # Install useful tools
@@ -100,4 +100,4 @@ echo ""
 echo "4. Manual restart if needed:"
 echo "   ./restart.sh"
 echo ""
-echo "🌐 Your app will be available at: http://5.189.174.110:3000"
+echo "🌐 Your app will be available at: http://5.189.174.110:3011"

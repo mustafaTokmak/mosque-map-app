@@ -80,8 +80,8 @@ cat github-actions-key
 ## 🌐 Access Your App
 
 After successful deployment, your app will be available at:
-- `http://5.189.174.110:3000`
-- `http://your-domain.com:3000` (if you set up a domain)
+- `http://5.189.174.110:3011`
+- `http://your-domain.com:3011` (if you set up a domain)
 
 ## 🔒 Production Setup (Optional)
 
@@ -94,7 +94,7 @@ server {
     server_name your-domain.com;
 
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:3011;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
