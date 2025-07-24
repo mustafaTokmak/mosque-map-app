@@ -97,7 +97,19 @@ jobs:
           docker rm mosque-map-app || true
           
           # Run new container
-          docker run -d             --name mosque-map-app             --restart unless-stopped             -p 3011:80             -e REACT_APP_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}             -e REACT_APP_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}             mustafarenderrevenueai/mosque-map-app:latest
+          docker run -d \
+            --name mosque-map-app \
+            --restart unless-stopped \
+            -p 3011:80 \
+            -e REACT_APP_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }} \
+            -e REACT_APP_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }} \
+            mustafarenderrevenueai/mosque-map-app:latest
+          
+          echo "--- Docker Run Output ---"
+          docker ps -a
+          echo "--- Docker Logs for mosque-map-app ---"
+          docker logs mosque-map-app || true
+          echo "---------------------------------------"
           
           # Clean up old images
           docker image prune -f || true
