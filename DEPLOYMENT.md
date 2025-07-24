@@ -26,8 +26,8 @@ Before deploying, make sure to set your Supabase environment variables:
 
 ```bash
 # Create .env.production file
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_key
+REACT_APP_SUPABASE_URL=your_supabase_url
+REACT_APP_SUPABASE_ANON_KEY=your_supabase_key
 ```
 
 ### Deploy to Various Platforms
