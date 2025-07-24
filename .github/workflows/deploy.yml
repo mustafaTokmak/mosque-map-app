@@ -34,12 +34,16 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Set repository name to lowercase
+      id: repo_name_lower
+      run: echo "REPO_NAME_LOWER=${{ github.repository | lower }}" >> $GITHUB_ENV
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository | lower }}:latest
+        tags: ghcr.io/${{ env.REPO_NAME_LOWER }}:latest
         build-args: |
           VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}
@@ -58,7 +62,7 @@ jobs:
         port: ${{ secrets.SERVER_PORT }}
         script: |
           docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-          docker pull ghcr.io/${{ github.repository }}:latest
+          docker pull ghcr.io/${{ env.REPO_NAME_LOWER }}:latest
           docker stop mosque-map-app || true
           docker rm mosque-map-app || true
           docker run -d --name mosque-map-app -p 3011:80 ghcr.io/${{ github.repository }}:latest
