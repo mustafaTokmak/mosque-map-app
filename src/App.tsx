@@ -6,14 +6,12 @@ import SearchFilter, { FilterOptions } from './components/SearchFilter';
 import MosqueList from './components/MosqueList';
 import ErrorMessage from './components/ErrorMessage';
 import { useMosques } from './hooks/useMosques';
-import { useAuth } from './hooks/useAuth';
 import { useGeolocation } from './hooks/useGeolocation';
 import { Mosque, MosqueFormData } from './types/mosque';
 import './styles/mobile.css';
 
 function App() {
   const { mosques, addMosque, isLoading: isMosquesLoading, error: mosquesError } = useMosques();
-  const { isAuthenticated, signInAnonymously } = useAuth();
 
   const { location: userLocation, isLoading: isLoadingLocation, error: locationError, getCurrentLocation, clearError } = useGeolocation();
   
