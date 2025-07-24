@@ -103,4 +103,4 @@ jobs:
             mustafarenderrevenueai/mosque-map-app:latest
           
           # Clean up old images
-          docker image prune -f
+          docker image prune -f || true
