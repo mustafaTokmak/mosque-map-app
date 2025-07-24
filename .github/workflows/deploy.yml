@@ -36,7 +36,7 @@ jobs:
 
     - name: Set repository name to lowercase
       id: repo_name_lower
-      run: echo "REPO_NAME_LOWER=${{ github.repository | lower }}" >> $GITHUB_ENV
+      run: echo "REPO_NAME_LOWER=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
@@ -65,5 +65,5 @@ jobs:
           docker pull ghcr.io/${{ env.REPO_NAME_LOWER }}:latest
           docker stop mosque-map-app || true
           docker rm mosque-map-app || true
-          docker run -d --name mosque-map-app -p 3011:80 ghcr.io/${{ github.repository }}:latest
+          docker run -d --name mosque-map-app -p 3011:80 ghcr.io/${{ env.REPO_NAME_LOWER }}:latest
           docker system prune -f
