@@ -169,13 +169,17 @@ function App() {
   if (isMosquesLoading || isInitialLocationLoading) {
     return (
       <div className="App">
-        <div className="loading-container">
-          <div className="loading-spinner">
-            <div className="spinner"></div>
+        <div className="loading-screen">
+          <div className="loading-content">
+            <div className="loading-icon">🕌</div>
+            <h1 className="loading-title">Mosque Map</h1>
+            <div className="loading-spinner-wrapper">
+              <div className="modern-spinner"></div>
+            </div>
+            <p className="loading-text">
+              {isMosquesLoading ? 'Loading mosques...' : 'Getting your location...'}
+            </p>
           </div>
-          <p className="loading-message">
-            {isMosquesLoading ? 'Loading mosques...' : 'Getting your location...'}
-          </p>
         </div>
       </div>
     );
