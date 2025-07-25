@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Mosque Map",
+  "name": "Mosque Map - Find Prayer Places Near You",
+  "description": "Interactive map to find mosques, camis, mescits and Islamic prayer facilities with detailed amenities information.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#667eea",
+  "background_color": "#f8fafc",
+  "categories": ["navigation", "travel", "lifestyle"]
 }
