@@ -4,6 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Fix viewport height on mobile browsers
+function setViewportHeight() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+// Set initial viewport height
+setViewportHeight();
+
+// Update viewport height on resize (handles orientation changes and address bar hide/show)
+window.addEventListener('resize', setViewportHeight);
+window.addEventListener('orientationchange', () => {
+  setTimeout(setViewportHeight, 100);
+});
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
