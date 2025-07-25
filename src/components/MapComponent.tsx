@@ -102,7 +102,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ mosques, onMapClick, onMosq
   }, [mosques]);
 
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
+    <div style={{ height: '100%', width: '100%' }}>
       <MapContainer
         center={center}
         zoom={13}

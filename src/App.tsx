@@ -194,22 +194,24 @@ function App() {
         isLoadingLocation={isLoadingLocation}
       />
 
-      {currentView === 'map' ? (
-        <MapComponent
-          mosques={filteredMosques}
-          onMapClick={handleMapClick}
-          onMosqueClick={handleMosqueClick}
-          userLocation={userLocation}
-          centerOnUserLocation={shouldCenterOnLocation}
-        />
-      ) : (
-        <MosqueList
-          mosques={filteredMosques}
-          onMosqueClick={handleMosqueClick}
-          userLocation={userLocation}
-          isLoading={isMosquesLoading}
-        />
-      )}
+      <div className="main-content">
+        {currentView === 'map' ? (
+          <MapComponent
+            mosques={filteredMosques}
+            onMapClick={handleMapClick}
+            onMosqueClick={handleMosqueClick}
+            userLocation={userLocation}
+            centerOnUserLocation={shouldCenterOnLocation}
+          />
+        ) : (
+          <MosqueList
+            mosques={filteredMosques}
+            onMosqueClick={handleMosqueClick}
+            userLocation={userLocation}
+            isLoading={isMosquesLoading}
+          />
+        )}
+      </div>
 
       <div className="bottom-nav">
         <button
