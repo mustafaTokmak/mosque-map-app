@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import MapComponent from './components/MapComponent';
 import AddMosqueForm from './components/AddMosqueForm';
 import MosqueDetails from './components/MosqueDetails';
@@ -32,6 +32,8 @@ function App() {
     },
   });
   const [currentView, setCurrentView] = useState<'map' | 'list'>('map');
+  const [shouldCenterOnLocation, setShouldCenterOnLocation] = useState(false);
+  const [isInitialLocationLoading, setIsInitialLocationLoading] = useState(true);
 
   const handleMapClick = (lat: number, lng: number) => {
     setSelectedLocation({ lat, lng });
@@ -81,8 +83,38 @@ function App() {
   };
 
   const handleNearMe = () => {
+    setShouldCenterOnLocation(true);
     getCurrentLocation();
   };
+
+  // Request location on app startup (for initial center, but don't force pan to it)
+  useEffect(() => {
+    // Add a small delay to allow the app to fully initialize
+    const timer = setTimeout(() => {
+      getCurrentLocation();
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, [getCurrentLocation]);
+
+  // Stop initial loading when we have location or get an error
+  useEffect(() => {
+    if (userLocation || locationError) {
+      setIsInitialLocationLoading(false);
+    }
+  }, [userLocation, locationError]);
+
+  // Reset center trigger after location is used
+  useEffect(() => {
+    if (shouldCenterOnLocation && userLocation) {
+      // Reset the flag after a short delay to allow the map to center
+      const timer = setTimeout(() => {
+        setShouldCenterOnLocation(false);
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [shouldCenterOnLocation, userLocation]);
 
   // Filter and search mosques
   const filteredMosques = useMemo(() => {
@@ -133,15 +165,17 @@ function App() {
     return filtered;
   }, [mosques, searchQuery, filters]);
 
-  // Show loading state while mosques are being fetched
-  if (isMosquesLoading) {
+  // Show loading state while mosques are being fetched or getting initial location
+  if (isMosquesLoading || isInitialLocationLoading) {
     return (
       <div className="App">
         <div className="loading-container">
           <div className="loading-spinner">
             <div className="spinner"></div>
           </div>
-          <p className="loading-message">Loading mosques...</p>
+          <p className="loading-message">
+            {isMosquesLoading ? 'Loading mosques...' : 'Getting your location...'}
+          </p>
         </div>
       </div>
     );
@@ -161,6 +195,8 @@ function App() {
           mosques={filteredMosques}
           onMapClick={handleMapClick}
           onMosqueClick={handleMosqueClick}
+          userLocation={userLocation}
+          centerOnUserLocation={shouldCenterOnLocation}
         />
       ) : (
         <MosqueList

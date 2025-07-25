@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import React, { useState, useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet';
 import { Mosque, MOSQUE_TYPES } from '../types/mosque';
@@ -16,6 +16,8 @@ interface MapComponentProps {
   mosques: Mosque[];
   onMapClick: (lat: number, lng: number) => void;
   onMosqueClick: (mosque: Mosque) => void;
+  userLocation?: { lat: number; lng: number } | null;
+  centerOnUserLocation?: boolean;
 }
 
 const createMosqueIcon = (mosque: Mosque) => {
@@ -62,8 +64,35 @@ function MapEvents({ onMapClick }: { onMapClick: (lat: number, lng: number) => v
   return null;
 }
 
-const MapComponent: React.FC<MapComponentProps> = ({ mosques, onMapClick, onMosqueClick }) => {
-  const [center] = useState<[number, number]>([41.0082, 28.9784]); // Istanbul center
+function MapUpdater({ userLocation, centerOnUserLocation }: { 
+  userLocation?: { lat: number; lng: number } | null;
+  centerOnUserLocation?: boolean;
+}) {
+  const map = useMap();
+  const [hasProcessedCenterRequest, setHasProcessedCenterRequest] = useState(false);
+  
+  useEffect(() => {
+    if (userLocation && centerOnUserLocation && !hasProcessedCenterRequest) {
+      map.setView([userLocation.lat, userLocation.lng], 15, {
+        animate: true,
+        duration: 1
+      });
+      setHasProcessedCenterRequest(true);
+    }
+    
+    // Reset when centerOnUserLocation becomes false
+    if (!centerOnUserLocation) {
+      setHasProcessedCenterRequest(false);
+    }
+  }, [map, userLocation, centerOnUserLocation, hasProcessedCenterRequest]);
+  
+  return null;
+}
+
+const MapComponent: React.FC<MapComponentProps> = ({ mosques, onMapClick, onMosqueClick, userLocation, centerOnUserLocation }) => {
+  const center: [number, number] = userLocation 
+    ? [userLocation.lat, userLocation.lng]
+    : [41.0082, 28.9784]; // Istanbul center as fallback
 
   return (
     <div style={{ height: '100vh', width: '100%' }}>
@@ -77,6 +106,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ mosques, onMapClick, onMosq
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MapEvents onMapClick={onMapClick} />
+        <MapUpdater userLocation={userLocation} centerOnUserLocation={centerOnUserLocation} />
         <MarkerClusterGroup>
           {mosques.map((mosque) => (
             <Marker

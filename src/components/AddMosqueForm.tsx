@@ -122,46 +122,41 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
             <div className="form-group">
               <h3>Facilities</h3>
               <div className="facilities-grid">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={formData.facilities.menWc}
-                    onChange={() => handleFacilityChange('menWc')}
-                  />
+                <button
+                  type="button"
+                  className={`facility-btn ${formData.facilities.menWc ? 'active' : ''}`}
+                  onClick={() => handleFacilityChange('menWc')}
+                >
                   Men's WC
-                </label>
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={formData.facilities.womenWc}
-                    onChange={() => handleFacilityChange('womenWc')}
-                  />
+                </button>
+                <button
+                  type="button"
+                  className={`facility-btn ${formData.facilities.womenWc ? 'active' : ''}`}
+                  onClick={() => handleFacilityChange('womenWc')}
+                >
                   Women's WC
-                </label>
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={formData.facilities.menWudu}
-                    onChange={() => handleFacilityChange('menWudu')}
-                  />
+                </button>
+                <button
+                  type="button"
+                  className={`facility-btn ${formData.facilities.menWudu ? 'active' : ''}`}
+                  onClick={() => handleFacilityChange('menWudu')}
+                >
                   Men's Wudu
-                </label>
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={formData.facilities.womenWudu}
-                    onChange={() => handleFacilityChange('womenWudu')}
-                  />
+                </button>
+                <button
+                  type="button"
+                  className={`facility-btn ${formData.facilities.womenWudu ? 'active' : ''}`}
+                  onClick={() => handleFacilityChange('womenWudu')}
+                >
                   Women's Wudu
-                </label>
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={formData.facilities.womenPrayerArea}
-                    onChange={() => handleFacilityChange('womenPrayerArea')}
-                  />
+                </button>
+                <button
+                  type="button"
+                  className={`facility-btn ${formData.facilities.womenPrayerArea ? 'active' : ''}`}
+                  onClick={() => handleFacilityChange('womenPrayerArea')}
+                >
                   Women's Prayer Area
-                </label>
+                </button>
               </div>
             </div>
 
