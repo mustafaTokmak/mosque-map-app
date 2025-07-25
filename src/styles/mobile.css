@@ -1287,6 +1287,17 @@ body {
   margin: 8px !important;
 }
 
+/* Prevent mosque marker blinking/flickering */
+.mosque-marker {
+  animation: none !important;
+  transition: none !important;
+}
+
+.mosque-marker > div {
+  animation: none !important;
+  transition: none !important;
+}
+
 /* Responsive adjustments */
 @media (min-width: 768px) {
   .details-overlay {

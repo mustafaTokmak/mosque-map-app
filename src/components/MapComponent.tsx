@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet';
 import { Mosque, MOSQUE_TYPES } from '../types/mosque';
 import 'leaflet/dist/leaflet.css';
@@ -94,6 +93,14 @@ const MapComponent: React.FC<MapComponentProps> = ({ mosques, onMapClick, onMosq
     ? [userLocation.lat, userLocation.lng]
     : [41.0082, 28.9784]; // Istanbul center as fallback
 
+  // Memoize mosque icons to prevent recreation on every render
+  const mosqueMarkers = useMemo(() => {
+    return mosques.map((mosque) => ({
+      ...mosque,
+      icon: createMosqueIcon(mosque),
+    }));
+  }, [mosques]);
+
   return (
     <div style={{ height: '100vh', width: '100%' }}>
       <MapContainer
@@ -107,27 +114,25 @@ const MapComponent: React.FC<MapComponentProps> = ({ mosques, onMapClick, onMosq
         />
         <MapEvents onMapClick={onMapClick} />
         <MapUpdater userLocation={userLocation} centerOnUserLocation={centerOnUserLocation} />
-        <MarkerClusterGroup>
-          {mosques.map((mosque) => (
-            <Marker
-              key={mosque.id}
-              position={[mosque.location.lat, mosque.location.lng]}
-              icon={createMosqueIcon(mosque)}
-              eventHandlers={{
-                click: () => onMosqueClick(mosque),
-              }}
-            >
-              <Popup>
-                <div>
-                  <h3>{mosque.name}</h3>
-                  <p>Type: {MOSQUE_TYPES[mosque.type].label}</p>
-                  <p>{mosque.isPublic ? 'Public' : 'Private'}</p>
-                  {mosque.congregation && <p>Congregation: {mosque.congregation}</p>}
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </MarkerClusterGroup>
+        {mosqueMarkers.map((mosque) => (
+          <Marker
+            key={mosque.id}
+            position={[mosque.location.lat, mosque.location.lng]}
+            icon={mosque.icon}
+            eventHandlers={{
+              click: () => onMosqueClick(mosque),
+            }}
+          >
+            <Popup>
+              <div>
+                <h3>{mosque.name}</h3>
+                <p>Type: {MOSQUE_TYPES[mosque.type].label}</p>
+                <p>{mosque.isPublic ? 'Public' : 'Private'}</p>
+                {mosque.congregation && <p>Congregation: {mosque.congregation}</p>}
+              </div>
+            </Popup>
+          </Marker>
+        ))}
       </MapContainer>
     </div>
   );
