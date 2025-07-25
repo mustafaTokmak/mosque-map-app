@@ -53,7 +53,7 @@ jobs:
           echo "Starting new container..."
           docker run -d \
             --name mosque-map-app \
-            -p 3018:80 \
+            -p 3011:80 \
             -v /home/mustafa/mosque-data:/app/data \
             --restart always \
             ghcr.io/mustafatokmak/mosque-map-app:latest
