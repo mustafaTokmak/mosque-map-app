@@ -30,21 +30,31 @@ jobs:
           REACT_APP_SUPABASE_ANON_KEY=${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
 
     - name: Deploy to server
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
+        port: 22
+        timeout: 30s
+        command_timeout: 10m
         script: |
+          echo "Starting deployment..."
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          echo "Pulling latest image..."
           docker pull ${{ secrets.DOCKER_USERNAME }}/mosque-map-app:latest
+          echo "Stopping existing container..."
           docker stop mosque-map-app || true
           docker rm mosque-map-app || true
+          echo "Creating data directory..."
           mkdir -p /home/${{ secrets.SERVER_USERNAME }}/mosque-data
+          echo "Starting new container..."
           docker run -d \
             --name mosque-map-app \
             -p 3018:80 \
             -v /home/${{ secrets.SERVER_USERNAME }}/mosque-data:/app/data \
             --restart always \
             ${{ secrets.DOCKER_USERNAME }}/mosque-map-app:latest
+          echo "Cleaning up..."
           docker system prune -f
+          echo "Deployment completed successfully!"
