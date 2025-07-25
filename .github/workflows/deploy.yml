@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,7 +29,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/mustafatokmak/mosque-map-app:latest
+        tags: ghcr.io/${{ github.actor }}/mosque-map-app:latest
         build-args: |
           REACT_APP_SUPABASE_URL=${{ secrets.REACT_APP_SUPABASE_URL }}
           REACT_APP_SUPABASE_ANON_KEY=${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
@@ -44,7 +48,7 @@ jobs:
           echo "Logging into GitHub Container Registry..."
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           echo "Pulling latest image from GitHub Container Registry..."
-          docker pull ghcr.io/mustafatokmak/mosque-map-app:latest
+          docker pull ghcr.io/${{ github.actor }}/mosque-map-app:latest
           echo "Stopping existing container..."
           docker stop mosque-map-app || true
           docker rm mosque-map-app || true
@@ -56,7 +60,7 @@ jobs:
             -p 3011:80 \
             -v /home/mustafa/mosque-data:/app/data \
             --restart always \
-            ghcr.io/mustafatokmak/mosque-map-app:latest
+            ghcr.io/${{ github.actor }}/mosque-map-app:latest
           echo "Cleaning up..."
           docker system prune -f
           echo "Deployment completed successfully!"
