@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MosqueFormData } from '../types/mosque';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface AddMosqueFormProps {
   isOpen: boolean;
@@ -14,16 +15,17 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
   onSubmit,
   selectedLocation,
 }) => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<MosqueFormData>({
     name: '',
     type: 'cami',
     isPublic: true,
     facilities: {
-      menWc: false,
-      womenWc: false,
-      menWudu: false,
-      womenWudu: false,
-      womenPrayerArea: false,
+      menWc: null,
+      womenWc: null,
+      menWudu: null,
+      womenWudu: null,
+      womenPrayerArea: null,
     },
     congregation: '',
   });
@@ -41,24 +43,51 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
       type: 'cami',
       isPublic: true,
       facilities: {
-        menWc: false,
-        womenWc: false,
-        menWudu: false,
-        womenWudu: false,
-        womenPrayerArea: false,
+        menWc: null,
+        womenWc: null,
+        menWudu: null,
+        womenWudu: null,
+        womenPrayerArea: null,
       },
       congregation: '',
     });
   };
 
   const handleFacilityChange = (facility: keyof MosqueFormData['facilities']) => {
-    setFormData(prev => ({
-      ...prev,
-      facilities: {
-        ...prev.facilities,
-        [facility]: !prev.facilities[facility],
-      },
-    }));
+    setFormData(prev => {
+      const currentValue = prev.facilities[facility];
+      let nextValue: boolean | null;
+      
+      // Cycle through: null -> true -> false -> null
+      if (currentValue === null) {
+        nextValue = true;
+      } else if (currentValue === true) {
+        nextValue = false;
+      } else {
+        nextValue = null;
+      }
+      
+      return {
+        ...prev,
+        facilities: {
+          ...prev.facilities,
+          [facility]: nextValue,
+        },
+      };
+    });
+  };
+
+  const getFacilityButtonClass = (value: boolean | null) => {
+    if (value === true) return 'facility-btn active';
+    if (value === false) return 'facility-btn inactive';
+    return 'facility-btn';
+  };
+
+  const getFacilityButtonText = (facilityKey: string, value: boolean | null) => {
+    const facilityName = t(`facilities.${facilityKey}`);
+    if (value === null) return `${facilityName} - ${t('facilities.unknown')}`;
+    if (value === true) return `${facilityName} - ${t('facilities.available')}`;
+    return `${facilityName} - ${t('facilities.notAvailable')}`;
   };
 
   if (!isOpen) return null;
@@ -67,7 +96,7 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Add New Mosque</h2>
+          <h2>{t('addMosque.title')}</h2>
           <button className="close-btn" onClick={onClose}>×</button>
         </div>
         
@@ -122,41 +151,16 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
             <div className="form-group">
               <h3>Facilities</h3>
               <div className="facilities-grid">
-                <button
-                  type="button"
-                  className={`facility-btn ${formData.facilities.menWc ? 'active' : ''}`}
-                  onClick={() => handleFacilityChange('menWc')}
-                >
-                  Men's WC
-                </button>
-                <button
-                  type="button"
-                  className={`facility-btn ${formData.facilities.womenWc ? 'active' : ''}`}
-                  onClick={() => handleFacilityChange('womenWc')}
-                >
-                  Women's WC
-                </button>
-                <button
-                  type="button"
-                  className={`facility-btn ${formData.facilities.menWudu ? 'active' : ''}`}
-                  onClick={() => handleFacilityChange('menWudu')}
-                >
-                  Men's Wudu
-                </button>
-                <button
-                  type="button"
-                  className={`facility-btn ${formData.facilities.womenWudu ? 'active' : ''}`}
-                  onClick={() => handleFacilityChange('womenWudu')}
-                >
-                  Women's Wudu
-                </button>
-                <button
-                  type="button"
-                  className={`facility-btn ${formData.facilities.womenPrayerArea ? 'active' : ''}`}
-                  onClick={() => handleFacilityChange('womenPrayerArea')}
-                >
-                  Women's Prayer Area
-                </button>
+                {Object.entries(formData.facilities).map(([key, value]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    className={getFacilityButtonClass(value)}
+                    onClick={() => handleFacilityChange(key as keyof MosqueFormData['facilities'])}
+                  >
+                    {getFacilityButtonText(key, value)}
+                  </button>
+                ))}
               </div>
             </div>
 

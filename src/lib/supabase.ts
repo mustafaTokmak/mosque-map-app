@@ -26,11 +26,11 @@ export interface DatabaseMosque {
   longitude: number;
   address?: string;
   congregation?: string;
-  men_wc: boolean;
-  women_wc: boolean;
-  men_wudu: boolean;
-  women_wudu: boolean;
-  women_prayer_area: boolean;
+  men_wc: boolean | null;
+  women_wc: boolean | null;
+  men_wudu: boolean | null;
+  women_wudu: boolean | null;
+  women_prayer_area: boolean | null;
   created_by?: string;
   created_at: string;
   updated_at: string;
@@ -44,11 +44,11 @@ export interface MosqueInsert {
   longitude: number;
   address?: string;
   congregation?: string;
-  men_wc: boolean;
-  women_wc: boolean;
-  men_wudu: boolean;
-  women_wudu: boolean;
-  women_prayer_area: boolean;
+  men_wc: boolean | null;
+  women_wc: boolean | null;
+  men_wudu: boolean | null;
+  women_wudu: boolean | null;
+  women_prayer_area: boolean | null;
 }
 
 export interface MosqueUpdate {
@@ -59,9 +59,9 @@ export interface MosqueUpdate {
   longitude?: number;
   address?: string;
   congregation?: string;
-  men_wc?: boolean;
-  women_wc?: boolean;
-  men_wudu?: boolean;
-  women_wudu?: boolean;
-  women_prayer_area?: boolean;
+  men_wc?: boolean | null;
+  women_wc?: boolean | null;
+  men_wudu?: boolean | null;
+  women_wudu?: boolean | null;
+  women_prayer_area?: boolean | null;
 }

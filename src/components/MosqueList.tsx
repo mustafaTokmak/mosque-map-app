@@ -135,12 +135,12 @@ const MosqueList: React.FC<MosqueListProps> = ({
                   )}
 
                   <div className="facilities-summary">
-                    {mosque.facilities.menWc && <span className="facility-icon" title="Men's WC">🚹</span>}
-                    {mosque.facilities.womenWc && <span className="facility-icon" title="Women's WC">🚺</span>}
-                    {mosque.facilities.menWudu && <span className="facility-icon" title="Men's Wudu">🚿</span>}
-                    {mosque.facilities.womenWudu && <span className="facility-icon" title="Women's Wudu">🛁</span>}
-                    {mosque.facilities.womenPrayerArea && <span className="facility-icon" title="Women's Prayer Area">👩‍🕌</span>}
-                    {!Object.values(mosque.facilities).some(f => f) && (
+                    {mosque.facilities.menWc === true && <span className="facility-icon" title="Men's WC">🚹</span>}
+                    {mosque.facilities.womenWc === true && <span className="facility-icon" title="Women's WC">🚺</span>}
+                    {mosque.facilities.menWudu === true && <span className="facility-icon" title="Men's Wudu">🚿</span>}
+                    {mosque.facilities.womenWudu === true && <span className="facility-icon" title="Women's Wudu">🛁</span>}
+                    {mosque.facilities.womenPrayerArea === true && <span className="facility-icon" title="Women's Prayer Area">👩‍🕌</span>}
+                    {!Object.values(mosque.facilities).some(f => f === true) && (
                       <span className="no-facilities">No facility info available</span>
                     )}
                   </div>

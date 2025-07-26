@@ -443,6 +443,21 @@ html, body {
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
+.facility-btn.inactive {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-color: #ef4444;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.facility-btn.inactive:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  border-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+}
+
 .location-info {
   background-color: #f0f9ff;
   padding: 12px;
@@ -614,6 +629,11 @@ html, body {
 .facility-item.not-available {
   background-color: #fef2f2;
   border: 1px solid #fecaca;
+}
+
+.facility-item.unknown {
+  background-color: #fefce8;
+  border: 1px solid #fed7aa;
 }
 
 .facility-icon {

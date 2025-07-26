@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mosque, MOSQUE_TYPES } from '../types/mosque';
+import { useLanguage } from '../contexts/LanguageContext';
 import { openDirectionsFromCurrentLocation } from '../utils/directions';
 
 interface MosqueDetailsProps {
@@ -9,6 +10,7 @@ interface MosqueDetailsProps {
 }
 
 const MosqueDetails: React.FC<MosqueDetailsProps> = ({ mosque, isOpen, onClose }) => {
+  const { t } = useLanguage();
   if (!isOpen || !mosque) return null;
 
   const handleGetDirections = () => {
@@ -29,12 +31,10 @@ const MosqueDetails: React.FC<MosqueDetailsProps> = ({ mosque, isOpen, onClose }
     womenPrayerArea: '👩‍🕌',
   };
 
-  const facilityLabels = {
-    menWc: "Men's WC",
-    womenWc: "Women's WC",
-    menWudu: "Men's Wudu",
-    womenWudu: "Women's Wudu",
-    womenPrayerArea: "Women's Prayer Area",
+  const getFacilityStatus = (value: boolean | null) => {
+    if (value === null) return { text: t('facilities.unknown'), icon: '❓', className: 'unknown' };
+    if (value === true) return { text: t('facilities.available'), icon: '✅', className: 'available' };
+    return { text: t('facilities.notAvailable'), icon: '❌', className: 'not-available' };
   };
 
   return (
@@ -55,42 +55,45 @@ const MosqueDetails: React.FC<MosqueDetailsProps> = ({ mosque, isOpen, onClose }
 
         <div className="details-content">
           <div className="detail-section">
-            <h3>Access</h3>
+            <h3>{t('mosqueDetails.access')}</h3>
             <div className="access-status">
               {mosque.isPublic ? (
-                <span className="public-badge">🌍 Public</span>
+                <span className="public-badge">🌍 {t('mosqueDetails.public')}</span>
               ) : (
-                <span className="private-badge">🔒 Private</span>
+                <span className="private-badge">🔒 {t('mosqueDetails.private')}</span>
               )}
             </div>
           </div>
 
           {mosque.congregation && (
             <div className="detail-section">
-              <h3>Congregation</h3>
+              <h3>{t('mosqueDetails.congregation')}</h3>
               <p>{mosque.congregation}</p>
             </div>
           )}
 
           <div className="detail-section">
-            <h3>Facilities</h3>
+            <h3>{t('mosqueDetails.facilities')}</h3>
             <div className="facilities-list">
-              {Object.entries(mosque.facilities).map(([key, available]) => (
-                <div 
-                  key={key} 
-                  className={`facility-item ${available ? 'available' : 'not-available'}`}
-                >
-                  <span className="facility-icon">
-                    {facilityIcons[key as keyof typeof facilityIcons]}
-                  </span>
-                  <span className="facility-label">
-                    {facilityLabels[key as keyof typeof facilityLabels]}
-                  </span>
-                  <span className="facility-status">
-                    {available ? '✅' : '❌'}
-                  </span>
-                </div>
-              ))}
+              {Object.entries(mosque.facilities).map(([key, available]) => {
+                const status = getFacilityStatus(available);
+                return (
+                  <div 
+                    key={key} 
+                    className={`facility-item ${status.className}`}
+                  >
+                    <span className="facility-icon">
+                      {facilityIcons[key as keyof typeof facilityIcons]}
+                    </span>
+                    <span className="facility-label">
+                      {t(`facilities.${key}`)}
+                    </span>
+                    <span className="facility-status">
+                      {status.icon}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

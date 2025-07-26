@@ -9,11 +9,11 @@ export interface Mosque {
     address?: string;
   };
   facilities: {
-    menWc: boolean;
-    womenWc: boolean;
-    menWudu: boolean;
-    womenWudu: boolean;
-    womenPrayerArea: boolean;
+    menWc: boolean | null;
+    womenWc: boolean | null;
+    menWudu: boolean | null;
+    womenWudu: boolean | null;
+    womenPrayerArea: boolean | null;
   };
   congregation?: string;
   createdBy: string;
@@ -26,11 +26,11 @@ export interface MosqueFormData {
   type: 'cami' | 'mescit' | 'cuma-only';
   isPublic: boolean;
   facilities: {
-    menWc: boolean;
-    womenWc: boolean;
-    menWudu: boolean;
-    womenWudu: boolean;
-    womenPrayerArea: boolean;
+    menWc: boolean | null;
+    womenWc: boolean | null;
+    menWudu: boolean | null;
+    womenWudu: boolean | null;
+    womenPrayerArea: boolean | null;
   };
   congregation?: string;
 }

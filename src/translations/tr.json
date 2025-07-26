@@ -29,7 +29,10 @@
     "womenWc": "Kadın WC",
     "menWudu": "🚰 Erkek Abdest",
     "womenWudu": "🚰 Kadın Abdest", 
-    "womenPrayerArea": "🧕🏻 Kadın Namaz"
+    "womenPrayerArea": "🧕🏻 Kadın Namaz",
+    "unknown": "Bilinmiyor",
+    "available": "Mevcut",
+    "notAvailable": "Mevcut Değil"
   },
   "filters": {
     "type": "Tür",

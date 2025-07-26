@@ -29,7 +29,10 @@
     "womenWc": "Women WC", 
     "menWudu": "🚰 Men Wudu",
     "womenWudu": "🚰 Women Wudu",
-    "womenPrayerArea": "🧕🏻 Women Prayer"
+    "womenPrayerArea": "🧕🏻 Women Prayer",
+    "unknown": "Unknown",
+    "available": "Available",
+    "notAvailable": "Not Available"
   },
   "filters": {
     "type": "Type",
