@@ -68,6 +68,20 @@ REACT_APP_SUPABASE_URL=your_supabase_project_url
 REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
+### Development Environment Variables (Optional)
+For development and testing, you can add these to `.env.local`:
+```
+# Mock user location (development only)
+REACT_APP_MOCK_LOCATION=istanbul
+```
+
+Available mock locations:
+- `istanbul` - Istanbul city center (41.0082, 28.9784)
+- `ankara` - Ankara city center (39.9334, 32.8597)
+- `izmir` - Izmir city center (38.4192, 27.1287)
+- `bursa` - Bursa city center (40.1826, 29.0665)
+- `antalya` - Antalya city center (36.8969, 30.7133)
+
 ### Supabase Setup
 1. Run `supabase-schema.sql` in Supabase SQL Editor
 2. This creates the mosques table with proper indexes and RLS policies

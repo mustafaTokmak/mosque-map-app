@@ -190,8 +190,6 @@ function App() {
       <SearchFilter
         onSearch={handleSearch}
         onFilter={handleFilter}
-        onNearMe={handleNearMe}
-        isLoadingLocation={isLoadingLocation}
       />
 
       <div className="main-content">
@@ -202,6 +200,8 @@ function App() {
             onMosqueClick={handleMosqueClick}
             userLocation={userLocation}
             centerOnUserLocation={shouldCenterOnLocation}
+            onLocateMe={handleNearMe}
+            isLoadingLocation={isLoadingLocation}
           />
         ) : (
           <MosqueList

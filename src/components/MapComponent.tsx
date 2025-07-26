@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { MapContainer, TileLayer, useMapEvents, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet.markercluster';
@@ -30,6 +30,8 @@ interface MapComponentProps {
   onMosqueClick: (mosque: Mosque) => void;
   userLocation?: { lat: number; lng: number } | null;
   centerOnUserLocation?: boolean;
+  onLocateMe?: () => void;
+  isLoadingLocation?: boolean;
 }
 
 // Cache icons to prevent recreation
@@ -201,10 +203,13 @@ function ClusterManager({ mosques, onMosqueClick }: {
   return null;
 }
 
-const MapComponent: React.FC<MapComponentProps> = ({ mosques, onMapClick, onMosqueClick, userLocation, centerOnUserLocation }) => {
-  const center: [number, number] = userLocation 
-    ? [userLocation.lat, userLocation.lng]
-    : [41.0082, 28.9784]; // Istanbul center as fallback
+const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapClick, onMosqueClick, userLocation, centerOnUserLocation, onLocateMe, isLoadingLocation }) => {
+  // Memoize center to prevent unnecessary re-renders
+  const center: [number, number] = useMemo(() => {
+    return userLocation 
+      ? [userLocation.lat, userLocation.lng]
+      : [41.0082, 28.9784]; // Istanbul center as fallback
+  }, [userLocation]);
 
   // Stable callback references
   const handleMapClick = useCallback((lat: number, lng: number) => {
@@ -215,23 +220,67 @@ const MapComponent: React.FC<MapComponentProps> = ({ mosques, onMapClick, onMosq
     onMosqueClick(mosque);
   }, [onMosqueClick]);
 
+
+  // Memoize map container style
+  const mapContainerStyle = useMemo(() => ({
+    height: '100%',
+    width: '100%'
+  }), []);
+
+  // Memoize wrapper style
+  const wrapperStyle = useMemo(() => ({
+    height: '100%',
+    width: '100%',
+    position: 'relative' as const
+  }), []);
+
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={wrapperStyle}>
       <MapContainer
         center={center}
         zoom={13}
-        style={{ height: '100%', width: '100%' }}
+        style={mapContainerStyle}
+        attributionControl={false}
+        zoomControl={false}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution=''
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MapEvents onMapClick={handleMapClick} />
         <MapUpdater userLocation={userLocation} centerOnUserLocation={centerOnUserLocation} />
         <ClusterManager mosques={mosques} onMosqueClick={handleMosqueClick} />
       </MapContainer>
+      
+      <button
+        onClick={onLocateMe}
+        disabled={isLoadingLocation}
+        className="locate-me-map-btn"
+        title="Find my location"
+        style={{
+          position: 'absolute',
+          bottom: '10px',
+          right: '10px',
+          zIndex: 1001,
+          width: '50px',
+          height: '50px',
+          backgroundColor: 'white',
+          border: '2px solid rgba(0,0,0,0.2)',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '20px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+          cursor: isLoadingLocation ? 'default' : 'pointer',
+          opacity: isLoadingLocation ? 0.6 : 1,
+          transition: 'all 0.2s ease-in-out',
+        }}
+      >
+        {isLoadingLocation ? '📍...' : '📍'}
+      </button>
     </div>
   );
-};
+});
 
 export default MapComponent;

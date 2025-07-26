@@ -1,5 +1,56 @@
 /* Mobile-first responsive styles */
 
+/* Locate button styles */
+.locate-me-map-btn {
+  position: absolute !important;
+  bottom: 10px !important;
+  right: 10px !important;
+  z-index: 1001 !important;
+  width: 50px !important;
+  height: 50px !important;
+  background-color: white !important;
+  border: 2px solid rgba(0,0,0,0.2) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+  transition: all 0.2s ease-in-out !important;
+  cursor: pointer !important;
+}
+
+/* Mobile specific positioning */
+@media (max-width: 768px) {
+  .locate-me-map-btn {
+    bottom: 10px !important;
+    right: 10px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+.locate-me-map-btn:hover {
+  background-color: #f5f5f5 !important;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+
+.locate-me-map-btn:active {
+  transform: scale(0.95);
+}
+
+.locate-me-map-btn:disabled {
+  cursor: default !important;
+  opacity: 0.6 !important;
+}
+
+.locate-me-map-btn:disabled:hover {
+  transform: none;
+  background-color: white !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
 /* CSS Variables for viewport units that work across browsers */
 :root {
   --vh: 1vh;

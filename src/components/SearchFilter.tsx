@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 interface SearchFilterProps {
   onSearch: (query: string) => void;
   onFilter: (filters: FilterOptions) => void;
-  onNearMe: () => void;
-  isLoadingLocation: boolean;
 }
 
 export interface FilterOptions {
@@ -22,8 +20,6 @@ export interface FilterOptions {
 const SearchFilter: React.FC<SearchFilterProps> = ({
   onSearch,
   onFilter,
-  onNearMe,
-  isLoadingLocation,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
@@ -89,14 +85,6 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           onChange={handleSearchChange}
           className="search-input"
         />
-        <button
-          onClick={onNearMe}
-          disabled={isLoadingLocation}
-          className="near-me-btn"
-          title="Find mosques near me"
-        >
-          {isLoadingLocation ? '📍...' : '📍'}
-        </button>
         <button
           onClick={() => setShowFilters(!showFilters)}
           className="filter-btn"
