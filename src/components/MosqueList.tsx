@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mosque, MOSQUE_TYPES } from '../types/mosque';
+import { useLanguage } from '../contexts/LanguageContext';
 import { openDirectionsFromCurrentLocation } from '../utils/directions';
 
 interface MosqueListProps {
@@ -34,6 +35,7 @@ const MosqueList: React.FC<MosqueListProps> = ({
   userLocation,
   isLoading,
 }) => {
+  const { t } = useLanguage();
   console.log('MosqueList received:', mosques.length, 'mosques');
   const handleGetDirections = (mosque: Mosque, event: React.MouseEvent) => {
     event.stopPropagation(); // Prevent mosque item click
@@ -52,7 +54,7 @@ const MosqueList: React.FC<MosqueListProps> = ({
           <div className="loading-spinner spinner-large">
             <div className="spinner"></div>
           </div>
-          <p className="loading-message">Finding mosques nearby...</p>
+          <p className="loading-message">{t('list.loadingMessage')}</p>
         </div>
       </div>
     );
@@ -63,11 +65,11 @@ const MosqueList: React.FC<MosqueListProps> = ({
       <div className="mosque-list empty">
         <div className="empty-state">
           <p>🕌</p>
-          <p>No mosques found</p>
-          <p>Try adjusting your search terms or clear your filters to see all available mosques in the area</p>
+          <p>{t('list.noMosquesFound')}</p>
+          <p>{t('list.noMosquesHint')}</p>
           <div className="empty-state-actions">
             <button className="empty-state-btn secondary" onClick={() => window.location.reload()}>
-              🔄 Clear Search
+              🔄 {t('list.clearSearch')}
             </button>
           </div>
         </div>
@@ -97,7 +99,7 @@ const MosqueList: React.FC<MosqueListProps> = ({
   return (
     <div className="mosque-list">
       <div className="list-header">
-        <h3>Found {mosques.length} mosque{mosques.length !== 1 ? 's' : ''}</h3>
+        <h3>{t('list.foundMosques')} {mosques.length} {mosques.length === 1 ? t('list.mosque') : t('list.mosques')}</h3>
       </div>
       <div className="mosque-items">
         {sortedMosques.map((mosque) => (
@@ -121,27 +123,27 @@ const MosqueList: React.FC<MosqueListProps> = ({
                 <div className="mosque-meta">
                   <div className="access-indicator">
                     {mosque.isPublic ? (
-                      <span className="public-indicator">🌍 Public</span>
+                      <span className="public-indicator">🌍 {t('mosqueDetails.public')}</span>
                     ) : (
-                      <span className="private-indicator">🔒 Private</span>
+                      <span className="private-indicator">🔒 {t('mosqueDetails.private')}</span>
                     )}
                   </div>
 
                   {mosque.congregation && mosque.congregation.trim() && (
                     <div className="congregation">
-                      <span className="congregation-label">Congregation:</span>
+                      <span className="congregation-label">{t('mosqueDetails.congregation')}:</span>
                       <span className="congregation-name">{mosque.congregation}</span>
                     </div>
                   )}
 
                   <div className="facilities-summary">
-                    {mosque.facilities.menWc === true && <span className="facility-icon" title="Men's WC">🚹</span>}
-                    {mosque.facilities.womenWc === true && <span className="facility-icon" title="Women's WC">🚺</span>}
-                    {mosque.facilities.menWudu === true && <span className="facility-icon" title="Men's Wudu">🚿</span>}
-                    {mosque.facilities.womenWudu === true && <span className="facility-icon" title="Women's Wudu">🛁</span>}
-                    {mosque.facilities.womenPrayerArea === true && <span className="facility-icon" title="Women's Prayer Area">👩‍🕌</span>}
+                    {mosque.facilities.menWc === true && <span className="facility-icon" title={t('facilities.menWc')}>🚹</span>}
+                    {mosque.facilities.womenWc === true && <span className="facility-icon" title={t('facilities.womenWc')}>🚺</span>}
+                    {mosque.facilities.menWudu === true && <span className="facility-icon" title={t('facilities.menWudu')}>🚿</span>}
+                    {mosque.facilities.womenWudu === true && <span className="facility-icon" title={t('facilities.womenWudu')}>🛁</span>}
+                    {mosque.facilities.womenPrayerArea === true && <span className="facility-icon" title={t('facilities.womenPrayerArea')}>👩‍🕌</span>}
                     {!Object.values(mosque.facilities).some(f => f === true) && (
-                      <span className="no-facilities">No facility info available</span>
+                      <span className="no-facilities">{t('list.noFacilities')}</span>
                     )}
                   </div>
                 </div>
@@ -160,9 +162,9 @@ const MosqueList: React.FC<MosqueListProps> = ({
                   <button
                     className="directions-btn"
                     onClick={(e) => handleGetDirections(mosque, e)}
-                    title="Get Directions"
+                    title={t('list.getDirections')}
                   >
-                    🧭
+                    🗺️
                   </button>
                   <div className="mosque-item-arrow">➤</div>
                 </div>

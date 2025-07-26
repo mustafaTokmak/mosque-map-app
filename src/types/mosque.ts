@@ -16,6 +16,7 @@ export interface Mosque {
     womenPrayerArea: boolean | null;
   };
   congregation?: string;
+  description?: string;
   createdBy: string;
   createdAt: Date;
   updatedAt: Date;
@@ -33,6 +34,7 @@ export interface MosqueFormData {
     womenPrayerArea: boolean | null;
   };
   congregation?: string;
+  description?: string;
 }
 
 export const MOSQUE_TYPES = {

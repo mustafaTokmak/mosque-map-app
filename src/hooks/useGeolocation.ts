@@ -13,6 +13,7 @@ const MOCK_LOCATIONS = {
   izmir: { lat: 38.4192, lng: 27.1287 },
   bursa: { lat: 40.1826, lng: 29.0665 },
   antalya: { lat: 36.8969, lng: 30.7133 },
+  london: { lat: 51.5074, lng: -0.1278 },
 };
 
 export const useGeolocation = () => {

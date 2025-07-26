@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MosqueFormData } from '../types/mosque';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useModalAnimation } from '../hooks/useModalAnimation';
 
 interface AddMosqueFormProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
   selectedLocation,
 }) => {
   const { t } = useLanguage();
+  const { isVisible, isClosing, handleClose } = useModalAnimation({ isOpen, onClose });
   const [formData, setFormData] = useState<MosqueFormData>({
     name: '',
     type: 'cami',
@@ -28,16 +30,17 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
       womenPrayerArea: null,
     },
     congregation: '',
+    description: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedLocation) {
-      alert('Please select a location on the map first');
+      alert(t('addMosque.selectLocationFirst'));
       return;
     }
     onSubmit(formData);
-    onClose();
+    handleClose();
     setFormData({
       name: '',
       type: 'cami',
@@ -50,6 +53,7 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
         womenPrayerArea: null,
       },
       congregation: '',
+      description: '',
     });
   };
 
@@ -90,20 +94,20 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
     return `${facilityName} - ${t('facilities.notAvailable')}`;
   };
 
-  if (!isOpen) return null;
+  if (!isVisible) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className={`modal-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{t('addMosque.title')}</h2>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button className="close-btn" onClick={handleClose}>×</button>
         </div>
         
         <form onSubmit={handleSubmit} className="mosque-form">
           <div className="form-content">
             <div className="form-group">
-              <label htmlFor="name">Name *</label>
+              <label htmlFor="name">{t('addMosque.name')} *</label>
               <input
                 type="text"
                 id="name"
@@ -114,42 +118,55 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
             </div>
 
             <div className="form-group">
-              <label htmlFor="type">Type *</label>
+              <label htmlFor="type">{t('addMosque.type')} *</label>
               <select
                 id="type"
                 value={formData.type}
                 onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value as any }))}
               >
-                <option value="cami">Cami</option>
-                <option value="mescit">Mescit</option>
-                <option value="cuma-only">Cuma Only</option>
+                <option value="cami">{t('mosqueTypes.cami')}</option>
+                <option value="mescit">{t('mosqueTypes.mescit')}</option>
+                <option value="cuma-only">{t('mosqueTypes.cumaOnly')}</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={formData.isPublic}
-                  onChange={(e) => setFormData(prev => ({ ...prev, isPublic: e.target.checked }))}
-                />
-                Public Access
-              </label>
+              <label htmlFor="description">{t('addMosque.description')}</label>
+              <textarea
+                id="description"
+                value={formData.description}
+                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                placeholder={t('addMosque.descriptionPlaceholder')}
+                rows={3}
+              />
             </div>
 
             <div className="form-group">
-              <label htmlFor="congregation">Congregation</label>
+              <label htmlFor="congregation">{t('addMosque.congregation')}</label>
               <input
                 type="text"
                 id="congregation"
                 value={formData.congregation}
                 onChange={(e) => setFormData(prev => ({ ...prev, congregation: e.target.value }))}
-                placeholder="Optional"
+                placeholder={t('common.optional')}
               />
             </div>
 
             <div className="form-group">
-              <h3>Facilities</h3>
+              <h3>{t('addMosque.access')}</h3>
+              <div className="access-toggle">
+                <button
+                  type="button"
+                  className={`facility-btn ${formData.isPublic ? 'active' : 'inactive'}`}
+                  onClick={() => setFormData(prev => ({ ...prev, isPublic: !prev.isPublic }))}
+                >
+                  {formData.isPublic ? `🌍 ${t('mosqueDetails.public')}` : `🔒 ${t('mosqueDetails.private')}`}
+                </button>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <h3>{t('addMosque.facilities')}</h3>
               <div className="facilities-grid">
                 {Object.entries(formData.facilities).map(([key, value]) => (
                   <button
@@ -172,11 +189,11 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
           </div>
 
           <div className="form-actions">
-            <button type="button" onClick={onClose} className="btn-cancel">
-              Cancel
+            <button type="button" onClick={handleClose} className="btn-cancel">
+              {t('common.cancel')}
             </button>
             <button type="submit" className="btn-submit">
-              Add Mosque
+              {t('addMosque.submit')}
             </button>
           </div>
         </form>

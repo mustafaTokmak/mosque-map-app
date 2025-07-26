@@ -7,7 +7,11 @@
     "error": "Error",
     "close": "Close",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "optional": "Optional"
+  },
+  "loading": {
+    "map": "Loading map..."
   },
   "map": {
     "searchPlaceholder": "Search mosques...",
@@ -48,11 +52,24 @@
     "map": "Map",
     "list": "List"
   },
+  "list": {
+    "loadingMessage": "Finding mosques nearby...",
+    "noMosquesFound": "No mosques found",
+    "noMosquesHint": "Try adjusting your search terms or clear your filters to see all available mosques in the area",
+    "clearSearch": "Clear Search",
+    "foundMosques": "Found",
+    "mosque": "mosque",
+    "mosques": "mosques",
+    "noFacilities": "No facility info available",
+    "getDirections": "Get Directions"
+  },
   "mosqueDetails": {
     "type": "Type",
+    "access": "Access",
     "public": "Public",
     "private": "Private",
     "congregation": "Congregation",
+    "description": "Description",
     "address": "Address",
     "facilities": "Facilities"
   },
@@ -61,9 +78,13 @@
     "name": "Mosque Name",
     "type": "Type",
     "congregation": "Congregation (Optional)",
+    "description": "Description / Notes (Optional)",
+    "descriptionPlaceholder": "e.g., Airport 2nd floor, ask security for key...",
+    "access": "Access Type",
     "isPublic": "Public Access",
     "facilities": "Available Facilities",
-    "submit": "Add Mosque"
+    "submit": "Add Mosque",
+    "selectLocationFirst": "Please select a location on the map first"
   },
   "loadingScreen": {
     "title": "Mosque Map",

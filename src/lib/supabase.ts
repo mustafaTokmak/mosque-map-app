@@ -26,6 +26,7 @@ export interface DatabaseMosque {
   longitude: number;
   address?: string;
   congregation?: string;
+  description?: string;
   men_wc: boolean | null;
   women_wc: boolean | null;
   men_wudu: boolean | null;
@@ -44,6 +45,7 @@ export interface MosqueInsert {
   longitude: number;
   address?: string;
   congregation?: string;
+  description?: string;
   men_wc: boolean | null;
   women_wc: boolean | null;
   men_wudu: boolean | null;
@@ -59,6 +61,7 @@ export interface MosqueUpdate {
   longitude?: number;
   address?: string;
   congregation?: string;
+  description?: string;
   men_wc?: boolean | null;
   women_wc?: boolean | null;
   men_wudu?: boolean | null;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageDropdown from './LanguageDropdown';
+import { useModalAnimation } from '../hooks/useModalAnimation';
 
 interface SearchFilterProps {
   onSearch: (query: string) => void;
@@ -26,6 +27,11 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+  const { isVisible: filtersVisible, isClosing: filtersClosing, handleClose: handleFiltersClose } = useModalAnimation({ 
+    isOpen: showFilters, 
+    onClose: () => setShowFilters(false),
+    animationDuration: 300
+  });
   const [filters, setFilters] = useState<FilterOptions>({
     type: 'all',
     isPublic: 'all',
@@ -93,7 +99,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         <LanguageDropdown />
         
         <button
-          onClick={() => setShowFilters(!showFilters)}
+          onClick={() => showFilters ? handleFiltersClose() : setShowFilters(true)}
           className="filter-btn"
           title={t('common.filter')}
         >
@@ -101,8 +107,8 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         </button>
       </div>
 
-      {showFilters && (
-        <div className="filters-panel">
+      {filtersVisible && (
+        <div className={`filters-panel ${filtersClosing ? 'closing' : ''}`}>
           <div className="filter-section">
             <label>{t('filters.type')}:</label>
             <select

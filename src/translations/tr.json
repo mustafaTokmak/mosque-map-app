@@ -7,7 +7,11 @@
     "error": "Hata",
     "close": "Kapat",
     "save": "Kaydet",
-    "cancel": "İptal"
+    "cancel": "İptal",
+    "optional": "Opsiyonel"
+  },
+  "loading": {
+    "map": "Harita yükleniyor..."
   },
   "map": {
     "searchPlaceholder": "Cami ara...",
@@ -48,11 +52,24 @@
     "map": "Harita",
     "list": "Liste"
   },
+  "list": {
+    "loadingMessage": "Yakındaki camiler aranıyor...",
+    "noMosquesFound": "Cami bulunamadı",
+    "noMosquesHint": "Arama terimlerinizi ayarlayın veya filtrelerinizi temizleyerek bölgedeki tüm camiyi görün",
+    "clearSearch": "Aramayı Temizle",
+    "foundMosques": "Bulunan",
+    "mosque": "cami",
+    "mosques": "cami",
+    "noFacilities": "İmkan bilgisi mevcut değil",
+    "getDirections": "Yol Tarifi Al"
+  },
   "mosqueDetails": {
     "type": "Tür",
+    "access": "Erişim",
     "public": "Genel",
     "private": "Özel",
     "congregation": "Cemaat",
+    "description": "Açıklama",
     "address": "Adres",
     "facilities": "İmkanlar"
   },
@@ -61,9 +78,13 @@
     "name": "Cami Adı",
     "type": "Tür",
     "congregation": "Cemaat (Opsiyonel)",
+    "description": "Açıklama / Notlar (Opsiyonel)",
+    "descriptionPlaceholder": "örnek: Havalimanı 2. kat, güvenlikten anahtar isteyin...",
+    "access": "Erişim Türü",
     "isPublic": "Genel Erişim",
     "facilities": "Mevcut İmkanlar",
-    "submit": "Cami Ekle"
+    "submit": "Cami Ekle",
+    "selectLocationFirst": "Lütfen önce haritadan bir konum seçin"
   },
   "loadingScreen": {
     "title": "Cami Haritası",

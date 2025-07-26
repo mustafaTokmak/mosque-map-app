@@ -1,5 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import MapComponent from './components/MapComponent';
+import React, { useState, useMemo, useEffect, lazy, Suspense } from 'react';
 import AddMosqueForm from './components/AddMosqueForm';
 import MosqueDetails from './components/MosqueDetails';
 import SearchFilter, { FilterOptions } from './components/SearchFilter';
@@ -10,6 +9,8 @@ import { useGeolocation } from './hooks/useGeolocation';
 import { useLanguage } from './contexts/LanguageContext';
 import { Mosque, MosqueFormData } from './types/mosque';
 import './styles/mobile.css';
+
+const MapComponent = lazy(() => import('./components/MapComponent'));
 
 function App() {
   const { t } = useLanguage();
@@ -196,15 +197,20 @@ function App() {
 
       <div className="main-content">
         {currentView === 'map' ? (
-          <MapComponent
-            mosques={filteredMosques}
-            onMapClick={handleMapClick}
-            onMosqueClick={handleMosqueClick}
-            userLocation={userLocation}
-            centerOnUserLocation={shouldCenterOnLocation}
-            onLocateMe={handleNearMe}
-            isLoadingLocation={isLoadingLocation}
-          />
+          <Suspense fallback={<div className="map-loading">
+            <div className="loading-spinner"></div>
+            <p>{t('loading.map')}</p>
+          </div>}>
+            <MapComponent
+              mosques={filteredMosques}
+              onMapClick={handleMapClick}
+              onMosqueClick={handleMosqueClick}
+              userLocation={userLocation}
+              centerOnUserLocation={shouldCenterOnLocation}
+              onLocateMe={handleNearMe}
+              isLoadingLocation={isLoadingLocation}
+            />
+          </Suspense>
         ) : (
           <MosqueList
             mosques={filteredMosques}

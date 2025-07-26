@@ -2,6 +2,7 @@ import React from 'react';
 import { Mosque, MOSQUE_TYPES } from '../types/mosque';
 import { useLanguage } from '../contexts/LanguageContext';
 import { openDirectionsFromCurrentLocation } from '../utils/directions';
+import { useModalAnimation } from '../hooks/useModalAnimation';
 
 interface MosqueDetailsProps {
   mosque: Mosque | null;
@@ -11,7 +12,9 @@ interface MosqueDetailsProps {
 
 const MosqueDetails: React.FC<MosqueDetailsProps> = ({ mosque, isOpen, onClose }) => {
   const { t } = useLanguage();
-  if (!isOpen || !mosque) return null;
+  const { isVisible, isClosing, handleClose } = useModalAnimation({ isOpen, onClose, animationDuration: 250 });
+  
+  if (!isVisible || !mosque) return null;
 
   const handleGetDirections = () => {
     openDirectionsFromCurrentLocation(
@@ -38,7 +41,7 @@ const MosqueDetails: React.FC<MosqueDetailsProps> = ({ mosque, isOpen, onClose }
   };
 
   return (
-    <div className="details-overlay" onClick={onClose}>
+    <div className={`details-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
       <div className="details-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="details-header">
           <div className="mosque-title">
@@ -50,7 +53,7 @@ const MosqueDetails: React.FC<MosqueDetailsProps> = ({ mosque, isOpen, onClose }
               {MOSQUE_TYPES[mosque.type].label}
             </div>
           </div>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button className="close-btn" onClick={handleClose}>×</button>
         </div>
 
         <div className="details-content">
@@ -69,6 +72,13 @@ const MosqueDetails: React.FC<MosqueDetailsProps> = ({ mosque, isOpen, onClose }
             <div className="detail-section">
               <h3>{t('mosqueDetails.congregation')}</h3>
               <p>{mosque.congregation}</p>
+            </div>
+          )}
+
+          {mosque.description && (
+            <div className="detail-section">
+              <h3>{t('mosqueDetails.description')}</h3>
+              <p>{mosque.description}</p>
             </div>
           )}
 
