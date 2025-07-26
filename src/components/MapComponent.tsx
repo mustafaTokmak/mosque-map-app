@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMapEvents, useMap, Circle, Popup } from 're
 import L from 'leaflet';
 import 'leaflet.markercluster';
 import { Mosque, MOSQUE_TYPES } from '../types/mosque';
+import { useLanguage } from '../contexts/LanguageContext';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
@@ -204,6 +205,7 @@ function ClusterManager({ mosques, onMosqueClick }: {
 }
 
 const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapClick, onMosqueClick, userLocation, centerOnUserLocation, onLocateMe, isLoadingLocation }) => {
+  const { t } = useLanguage();
   const [showLocationAnimation, setShowLocationAnimation] = useState(false);
   
   // Memoize center to prevent unnecessary re-renders
@@ -287,7 +289,7 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapCl
                   color: '#4285F4',
                   fontSize: '14px'
                 }}>
-                  You are here
+                  {t('map.youAreHere')}
                 </div>
               </Popup>
             </Circle>
@@ -328,7 +330,7 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapCl
             pointerEvents: 'none',
           }}
         >
-          📍 You are here
+          📍 {t('map.youAreHere')}
         </div>
       )}
       
@@ -336,7 +338,7 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapCl
         onClick={onLocateMe}
         disabled={isLoadingLocation}
         className="locate-me-map-btn"
-        title="Find my location"
+        title={t('map.findMyLocation')}
         style={{
           position: 'absolute',
           bottom: '10px',
@@ -357,7 +359,7 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapCl
           transition: 'all 0.2s ease-in-out',
         }}
       >
-        {isLoadingLocation ? '📍...' : '📍'}
+        {isLoadingLocation ? '📍' : '📍'}
       </button>
     </div>
   );

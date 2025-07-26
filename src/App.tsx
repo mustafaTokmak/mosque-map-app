@@ -7,10 +7,12 @@ import MosqueList from './components/MosqueList';
 import ErrorMessage from './components/ErrorMessage';
 import { useMosques } from './hooks/useMosques';
 import { useGeolocation } from './hooks/useGeolocation';
+import { useLanguage } from './contexts/LanguageContext';
 import { Mosque, MosqueFormData } from './types/mosque';
 import './styles/mobile.css';
 
 function App() {
+  const { t } = useLanguage();
   const { mosques, addMosque, isLoading: isMosquesLoading, error: mosquesError } = useMosques();
 
   const { location: userLocation, isLoading: isLoadingLocation, error: locationError, getCurrentLocation, clearError } = useGeolocation();
@@ -172,12 +174,12 @@ function App() {
         <div className="loading-screen">
           <div className="loading-content">
             <div className="loading-icon">🕌</div>
-            <h1 className="loading-title">Mosque Map</h1>
+            <h1 className="loading-title">{t('loadingScreen.title')}</h1>
             <div className="loading-spinner-wrapper">
               <div className="modern-spinner"></div>
             </div>
             <p className="loading-text">
-              {isMosquesLoading ? 'Loading mosques...' : 'Getting your location...'}
+              {isMosquesLoading ? t('loadingScreen.loadingMosques') : t('loadingScreen.gettingLocation')}
             </p>
           </div>
         </div>
@@ -219,14 +221,14 @@ function App() {
           onClick={() => setCurrentView('map')}
         >
           <span className="bottom-nav-icon">🗺️</span>
-          <span>Map</span>
+          <span>{t('navigation.map')}</span>
         </button>
         <button
           className={`bottom-nav-item ${currentView === 'list' ? 'active' : ''}`}
           onClick={() => setCurrentView('list')}
         >
           <span className="bottom-nav-icon">📋</span>
-          <span>List</span>
+          <span>{t('navigation.list')}</span>
         </button>
       </div>
 

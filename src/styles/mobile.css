@@ -23,6 +23,142 @@
   }
 }
 
+/* Custom language dropdown in search bar */
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.language-dropdown-trigger {
+  background: white;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.language-dropdown-trigger:hover {
+  border-color: rgba(0,0,0,0.2);
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.language-dropdown-trigger:focus {
+  border-color: #4285F4;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+.language-current {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.language-flag {
+  font-size: 16px;
+}
+
+.language-code {
+  font-weight: 700;
+  color: #374151;
+  font-size: 14px;
+}
+
+.dropdown-arrow {
+  font-size: 10px;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+  transform-origin: center;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.language-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  margin-top: 8px;
+  backdrop-filter: blur(10px);
+  min-width: 80px;
+}
+
+.language-option {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.language-option:last-child {
+  border-bottom: none;
+}
+
+.language-option:hover {
+  background-color: #f8f9fa;
+  transform: translateX(2px);
+}
+
+.language-option.selected {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  color: #1d4ed8;
+}
+
+.language-option.selected:hover {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+}
+
+.option-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.option-flag {
+  font-size: 16px;
+}
+
+.option-code {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.option-name {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.language-option.selected .option-name {
+  color: #3b82f6;
+}
+
 /* Locate button styles */
 .locate-me-map-btn {
   position: absolute !important;

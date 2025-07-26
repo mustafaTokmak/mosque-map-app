@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import { LanguageProvider } from './contexts/LanguageContext';
 import reportWebVitals from './reportWebVitals';
 
 // Fix viewport height on mobile browsers
@@ -24,7 +25,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
   </React.StrictMode>
 );
 

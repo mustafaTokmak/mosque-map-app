@@ -1,0 +1,70 @@
+{
+  "common": {
+    "search": "Ara",
+    "filter": "Filtrele",
+    "clear": "Temizle",
+    "loading": "Yükleniyor",
+    "error": "Hata",
+    "close": "Kapat",
+    "save": "Kaydet",
+    "cancel": "İptal"
+  },
+  "map": {
+    "searchPlaceholder": "Cami ara...",
+    "youAreHere": "Buradasınız",
+    "findMyLocation": "Konumumu bul",
+    "locating": "Konum alınıyor...",
+    "locationError": "Konum alınamadı",
+    "locationDenied": "Konum erişimi reddedildi",
+    "locationUnavailable": "Konum bilgisi mevcut değil",
+    "locationTimeout": "Konum isteği zaman aşımına uğradı"
+  },
+  "mosqueTypes": {
+    "cami": "Cami",
+    "mescit": "Mescit",
+    "cumaOnly": "Sadece Cuma"
+  },
+  "facilities": {
+    "menWc": "Erkek WC",
+    "womenWc": "Kadın WC",
+    "menWudu": "🚰 Erkek Abdest",
+    "womenWudu": "🚰 Kadın Abdest", 
+    "womenPrayerArea": "🧕🏻 Kadın Namaz"
+  },
+  "filters": {
+    "type": "Tür",
+    "allTypes": "Tüm Türler",
+    "access": "Erişim",
+    "all": "Tümü",
+    "publicOnly": "Sadece Genel",
+    "privateOnly": "Sadece Özel",
+    "facilities": "İmkanlar",
+    "clearAll": "Tümünü Temizle"
+  },
+  "navigation": {
+    "map": "Harita",
+    "list": "Liste"
+  },
+  "mosqueDetails": {
+    "type": "Tür",
+    "public": "Genel",
+    "private": "Özel",
+    "congregation": "Cemaat",
+    "address": "Adres",
+    "facilities": "İmkanlar"
+  },
+  "addMosque": {
+    "title": "Yeni Cami Ekle",
+    "name": "Cami Adı",
+    "type": "Tür",
+    "congregation": "Cemaat (Opsiyonel)",
+    "isPublic": "Genel Erişim",
+    "facilities": "Mevcut İmkanlar",
+    "submit": "Cami Ekle"
+  },
+  "loadingScreen": {
+    "title": "Cami Haritası",
+    "loadingMosques": "Camiler yükleniyor...",
+    "gettingLocation": "Konumunuz alınıyor..."
+  }
+}

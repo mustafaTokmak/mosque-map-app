@@ -1,0 +1,70 @@
+{
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "loading": "Loading",
+    "error": "Error",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "map": {
+    "searchPlaceholder": "Search mosques...",
+    "youAreHere": "You are here",
+    "findMyLocation": "Find my location",
+    "locating": "Locating...",
+    "locationError": "Unable to get location",
+    "locationDenied": "Location access denied by user",
+    "locationUnavailable": "Location information unavailable",
+    "locationTimeout": "Location request timed out"
+  },
+  "mosqueTypes": {
+    "cami": "Mosque",
+    "mescit": "Prayer Room",
+    "cumaOnly": "Friday Only"
+  },
+  "facilities": {
+    "menWc": "Men WC",
+    "womenWc": "Women WC", 
+    "menWudu": "🚰 Men Wudu",
+    "womenWudu": "🚰 Women Wudu",
+    "womenPrayerArea": "🧕🏻 Women Prayer"
+  },
+  "filters": {
+    "type": "Type",
+    "allTypes": "All Types",
+    "access": "Access",
+    "all": "All",
+    "publicOnly": "Public Only",
+    "privateOnly": "Private Only",
+    "facilities": "Facilities",
+    "clearAll": "Clear All"
+  },
+  "navigation": {
+    "map": "Map",
+    "list": "List"
+  },
+  "mosqueDetails": {
+    "type": "Type",
+    "public": "Public",
+    "private": "Private",
+    "congregation": "Congregation",
+    "address": "Address",
+    "facilities": "Facilities"
+  },
+  "addMosque": {
+    "title": "Add New Mosque",
+    "name": "Mosque Name",
+    "type": "Type",
+    "congregation": "Congregation (Optional)",
+    "isPublic": "Public Access",
+    "facilities": "Available Facilities",
+    "submit": "Add Mosque"
+  },
+  "loadingScreen": {
+    "title": "Mosque Map",
+    "loadingMosques": "Loading mosques...",
+    "gettingLocation": "Getting your location..."
+  }
+}

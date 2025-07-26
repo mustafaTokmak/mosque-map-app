@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import LanguageDropdown from './LanguageDropdown';
 
 interface SearchFilterProps {
   onSearch: (query: string) => void;
@@ -21,6 +23,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   onSearch,
   onFilter,
 }) => {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
@@ -80,15 +83,19 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search mosques..."
+          placeholder={t('map.searchPlaceholder')}
           value={searchQuery}
           onChange={handleSearchChange}
           className="search-input"
         />
+        
+        {/* Language selector */}
+        <LanguageDropdown />
+        
         <button
           onClick={() => setShowFilters(!showFilters)}
           className="filter-btn"
-          title="Filters"
+          title={t('common.filter')}
         >
           ⚙️
         </button>
@@ -97,32 +104,32 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
       {showFilters && (
         <div className="filters-panel">
           <div className="filter-section">
-            <label>Type:</label>
+            <label>{t('filters.type')}:</label>
             <select
               value={filters.type}
               onChange={(e) => handleFilterChange('type', e.target.value)}
             >
-              <option value="all">All Types</option>
-              <option value="cami">Cami</option>
-              <option value="mescit">Mescit</option>
-              <option value="cuma-only">Cuma Only</option>
+              <option value="all">{t('filters.allTypes')}</option>
+              <option value="cami">{t('mosqueTypes.cami')}</option>
+              <option value="mescit">{t('mosqueTypes.mescit')}</option>
+              <option value="cuma-only">{t('mosqueTypes.cumaOnly')}</option>
             </select>
           </div>
 
           <div className="filter-section">
-            <label>Access:</label>
+            <label>{t('filters.access')}:</label>
             <select
               value={filters.isPublic}
               onChange={(e) => handleFilterChange('isPublic', e.target.value)}
             >
-              <option value="all">All</option>
-              <option value="public">Public Only</option>
-              <option value="private">Private Only</option>
+              <option value="all">{t('filters.all')}</option>
+              <option value="public">{t('filters.publicOnly')}</option>
+              <option value="private">{t('filters.privateOnly')}</option>
             </select>
           </div>
 
           <div className="filter-section">
-            <label>Facilities:</label>
+            <label>{t('filters.facilities')}:</label>
             <div className="facility-filters">
               {Object.entries(filters.facilities).map(([key, checked]) => (
                 <button
@@ -130,11 +137,11 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
                   className={`facility-filter-btn ${checked ? 'active' : ''}`}
                   onClick={() => handleFacilityFilterChange(key as keyof FilterOptions['facilities'])}
                 >
-                  {key === 'menWc' && "Men WC"}
-                  {key === 'womenWc' && "Women WC"}
-                  {key === 'menWudu' && "Men Wudu"}
-                  {key === 'womenWudu' && "Women Wudu"}
-                  {key === 'womenPrayerArea' && "Women Prayer"}
+                  {key === 'menWc' && t('facilities.menWc')}
+                  {key === 'womenWc' && t('facilities.womenWc')}
+                  {key === 'menWudu' && t('facilities.menWudu')}
+                  {key === 'womenWudu' && t('facilities.womenWudu')}
+                  {key === 'womenPrayerArea' && t('facilities.womenPrayerArea')}
                 </button>
               ))}
             </div>
@@ -142,7 +149,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
 
           <div className="filter-actions">
             <button onClick={clearFilters} className="clear-filters-btn">
-              Clear All
+              {t('filters.clearAll')}
             </button>
           </div>
         </div>
