@@ -88,10 +88,19 @@ const AddMosqueForm: React.FC<AddMosqueFormProps> = ({
   };
 
   const getFacilityButtonText = (facilityKey: string, value: boolean | null) => {
+    const facilityIcons = {
+      menWc: '🚹',
+      womenWc: '🚺',
+      menWudu: '🚿',
+      womenWudu: '🛁',
+      womenPrayerArea: '🧕🏻',
+    };
+    
+    const icon = facilityIcons[facilityKey as keyof typeof facilityIcons] || '';
     const facilityName = t(`facilities.${facilityKey}`);
-    if (value === null) return `${facilityName} - ${t('facilities.unknown')}`;
-    if (value === true) return `${facilityName} - ${t('facilities.available')}`;
-    return `${facilityName} - ${t('facilities.notAvailable')}`;
+    if (value === null) return `${icon} ${facilityName} - ${t('facilities.unknown')}`;
+    if (value === true) return `${icon} ${facilityName} - ${t('facilities.available')}`;
+    return `${icon} ${facilityName} - ${t('facilities.notAvailable')}`;
   };
 
   if (!isVisible) return null;
