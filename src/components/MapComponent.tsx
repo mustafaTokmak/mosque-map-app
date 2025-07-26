@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { MapContainer, TileLayer, useMapEvents, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMapEvents, useMap, Circle, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet.markercluster';
 import { Mosque, MOSQUE_TYPES } from '../types/mosque';
@@ -204,6 +204,8 @@ function ClusterManager({ mosques, onMosqueClick }: {
 }
 
 const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapClick, onMosqueClick, userLocation, centerOnUserLocation, onLocateMe, isLoadingLocation }) => {
+  const [showLocationAnimation, setShowLocationAnimation] = useState(false);
+  
   // Memoize center to prevent unnecessary re-renders
   const center: [number, number] = useMemo(() => {
     return userLocation 
@@ -219,6 +221,18 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapCl
   const handleMosqueClick = useCallback((mosque: Mosque) => {
     onMosqueClick(mosque);
   }, [onMosqueClick]);
+
+  // Show animation when user location is found
+  useEffect(() => {
+    if (userLocation && !isLoadingLocation) {
+      setShowLocationAnimation(true);
+      const timer = setTimeout(() => {
+        setShowLocationAnimation(false);
+      }, 3000); // Show for 3 seconds
+      
+      return () => clearTimeout(timer);
+    }
+  }, [userLocation, isLoadingLocation]);
 
 
   // Memoize map container style
@@ -250,7 +264,73 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ mosques, onMapCl
         <MapEvents onMapClick={handleMapClick} />
         <MapUpdater userLocation={userLocation} centerOnUserLocation={centerOnUserLocation} />
         <ClusterManager mosques={mosques} onMosqueClick={handleMosqueClick} />
+        
+        {/* User location indicator */}
+        {userLocation && (
+          <>
+            <Circle
+              center={[userLocation.lat, userLocation.lng]}
+              radius={50}
+              pathOptions={{
+                fillColor: '#4285F4',
+                fillOpacity: 0.3,
+                color: '#4285F4',
+                weight: 2,
+                opacity: 0.8,
+              }}
+            >
+              <Popup>
+                <div style={{
+                  textAlign: 'center',
+                  padding: '8px 12px',
+                  fontWeight: 'bold',
+                  color: '#4285F4',
+                  fontSize: '14px'
+                }}>
+                  You are here
+                </div>
+              </Popup>
+            </Circle>
+            
+            {/* Center dot */}
+            <Circle
+              center={[userLocation.lat, userLocation.lng]}
+              radius={8}
+              pathOptions={{
+                fillColor: '#4285F4',
+                fillOpacity: 1,
+                color: 'white',
+                weight: 2,
+                opacity: 1,
+              }}
+            />
+          </>
+        )}
       </MapContainer>
+      
+      {/* Animated "You are here" popup */}
+      {showLocationAnimation && userLocation && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1002,
+            backgroundColor: '#4285F4',
+            color: 'white',
+            padding: '12px 20px',
+            borderRadius: '20px',
+            fontWeight: 'bold',
+            fontSize: '16px',
+            boxShadow: '0 4px 15px rgba(66, 133, 244, 0.4)',
+            animation: 'youAreHereAnimation 3s ease-in-out',
+            pointerEvents: 'none',
+          }}
+        >
+          📍 You are here
+        </div>
+      )}
       
       <button
         onClick={onLocateMe}
